@@ -15,7 +15,13 @@
 <link rel  = "preconnect" href                                                                                                                                                                                                                            = "https://fonts.googleapis.com">
 <link rel  = "preconnect" href                                                                                                                                                                                                                            = "https://fonts.gstatic.com" crossorigin>
 <link href = "https://fonts.googleapis.com/css2?family=Bree+Serif&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sorts+Mill+Goudy:ital@0;1&display=swap" rel = "stylesheet">
-   
+   <!-- Fonts -->
+  <link rel  = "preconnect" href                                                                                                                                                                                                    = "https://fonts.googleapis.com">
+  <link rel  = "preconnect" href                                                                                                                                                                                                    = "https://fonts.gstatic.com" crossorigin>
+  <link href = "https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel = "stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link href = "https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap" rel = "stylesheet"/>
 <link rel  = "preconnect" href                                                                     = "https://fonts.googleapis.com" />
 <link rel  = "preconnect" href                                                                     = "https://fonts.gstatic.com" crossorigin />
@@ -61,19 +67,30 @@
         border           : 1px solid white;
     }
 
-    .saudacao {
-        max-width: 1300px;
-        width    : 100%;
-    }
+   
 
-    .table-custom {
-        color           : rgb(0, 0, 0);
-        border-collapse : separate;
-        border-spacing  : 0;
-        width           : 100%;
-        border-radius   : 20px;
-        overflow        : hidden;
-    }
+.table-container {
+    max-height: 400px; /* Altura máxima desejada */
+    overflow-y: auto; /* Habilita scroll vertical */
+    width: 100%;
+}
+
+.table-custom {
+    color           : rgb(0, 0, 0);
+    border-collapse : separate;
+    border-spacing  : 0;
+    width           : 100%;
+    border-radius   : 20px;
+    overflow        : hidden;
+}
+
+/* Opcional: Manter cabeçalho fixo durante o scroll */
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    background-color: rgba(23, 23, 23, 0.296);
+    z-index: 1;
+}
 
      .table-custom th {
         color           : white;
@@ -143,13 +160,15 @@
  header {
       z-index: 10;
     }
- .custom-gradient2 {
-      background-image: url(./img/blur.svg);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      min-height: 100vh;
-    }
+.custom-gradient2 {
+    background-image: url(./img/blur.svg);
+    background-size: cover; /* Faz a imagem cobrir toda a área */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    width: 100%; /* Garante que a largura do elemento seja total */
+    height: 100vh; /* Faz com que o fundo ocupe 100% da altura da viewport */
+}
+
    
      h1, h2, h3, h4 {
       font-family: "Libre Bodoni", bold;
@@ -166,6 +185,136 @@
     color           : white;                     /* Texto em branco */
     border          : 1px solid #ccc;            /* Bordas sutis */
 }
+@media (max-width: 1200px) {
+    #saudacao h2 {
+        font-size: 32px;
+        color: black;
+        margin-left: 70px;
+         font-family: "Poppins", sans-serif;
+    }
+    #saudacao h3 {
+        font-size: 28px;
+         color: black;
+           margin-left: 70px;
+            font-family: "Poppins", sans-serif;
+    }
+    .table-custom {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 992px) {
+    #saudacao h2 {
+        font-size: 28px;
+    }
+    #saudacao h3 {
+        font-size: 24px;
+    }
+    .table-custom {
+        font-size: 13px;
+    }
+    .table-custom th, .table-custom td {
+        padding: 12px;
+    }
+}
+#saudacao h2 {
+         font-family: "Poppins", sans-serif !important;
+         color: black;
+    }
+    #saudacao h3 {
+            font-family: "Poppins", sans-serif !important;
+            color: black;
+    }
+@media (max-width: 768px) {
+    #saudacao h2 {
+        font-size: 24px;
+    }
+    #saudacao h3 {
+        font-size: 20px;
+    }
+    .table-custom {
+        font-size: 12px;
+    }
+    .table-custom th, .table-custom td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    #saudacao h2 {
+        font-size: 20px;
+    }
+    #saudacao h3 {
+        font-size: 16px;
+    }
+    .table-custom {
+        font-size: 11px;
+    }
+    .table-custom th, .table-custom td {
+        padding: 8px;
+    }
+
+    /* Hide some columns on very small screens */
+    .table-custom th:nth-child(4), 
+    .table-custom td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    #saudacao h2 {
+        font-size: 18px;
+    }
+    #saudacao h3 {
+        font-size: 14px;
+    }
+    .table-custom {
+        font-size: 10px;
+    }
+    .table-custom th, .table-custom td {
+        padding: 6px;
+    }
+
+    /* Further column reduction on smallest screens */
+    .table-custom th:nth-child(5), 
+    .table-custom td:nth-child(5) {
+        display: none;
+    }
+}
+@media (max-width: 1200px) {
+    .btn {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .btn {
+        padding: 0.35rem 0.7rem !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn {
+        padding: 0.3rem 0.6rem !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .btn {
+        padding: 0.2rem 0.4rem !important;
+        font-size: 0.7rem !important;
+    }
+}
   </style>
 
 </head>
@@ -178,7 +327,7 @@
     </a>
 
       <!-- Links de Navegação (Desktop) -->
-      <div class="hidden md:flex space-x-6 text-[15px]">
+      <div class="hidden lg:flex space-x-6 text-[15px]">
        <a href="/#home" class="hover:underline text-lg">Home</a>
        <a href="/#mais-pedidos" class="hover:underline text-lg">Mais pedidos</a>
        <a href="/#sobre" class="hover:underline text-lg">Sobre</a>
@@ -187,7 +336,7 @@
       </div>
 
    <!-- Botões de Ação -->
-      <div class="hidden md:flex gap-4">
+      <div class="hidden lg:flex gap-4">
         <button onclick="window.location.href='/login'" class="relative overflow-hidden text-sm px-6 py-2 border border-gray-400 text-pink-500 bg-white rounded-full transition duration-500 shadow-sm hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 group">
           <span class="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-200 transform scale-0 group-hover:scale-150 transition-transform duration-500 rounded-full"></span>
           <span class="relative">Agende Aqui</span>
@@ -206,7 +355,7 @@
       </div>
 
     <!-- Botão Mobile -->
-    <button id="mobile-menu-toggle" class="md:hidden text-black focus:outline-none">
+    <button id="mobile-menu-toggle" class="lg:hidden text-black focus:outline-none">
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
@@ -257,7 +406,7 @@
         new window.VLibras.Widget('https://vlibras.gov.br/app');
       </script>
     <main class="flex-1 w-full pt-32">
-        <div class="max-w-[1300px] mx-auto">
+        <div id = "saudacao" class="max-w-[1300px] mx-auto ">
             <h2 class="mb-2">Seja Bem-vindo(a), {{username}}</h2>
             <h3 class="mb-4">aos seus agendamentos!</h3>
         </div>
@@ -269,6 +418,8 @@
             <div class="alert alert-danger">{{error_msg}}</div>
             {{/if}}
             {{#if events.length}}
+
+<div class="table-container">
 <table class="table-custom">
     <thead>
         <tr>
@@ -301,6 +452,7 @@
         {{/each}}
     </tbody>
 </table>
+</div>
             {{else}}
             <h6>Você não possui nenhum agendamento no momento.</h6>
             {{/if}}
