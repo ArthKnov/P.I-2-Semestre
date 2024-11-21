@@ -669,7 +669,7 @@ app.post('/forgot-password', async (req, res) => {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Link para redefinir a senha
-        const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+        const resetLink = `http://localhost:3003/reset-password?token=${token}`;
 
         // Carregar e compilar o template Handlebars para o e-mail
         const templatePath = path.join(__dirname, 'views', 'emails', 'reset-password.handlebars');

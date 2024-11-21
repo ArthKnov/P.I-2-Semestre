@@ -248,9 +248,9 @@ p {
                 </select>
             </div>
         </form>
-        <button type="button" 
+       <button type="button" 
                 class="mobile-submit-button w-full p-3 border border-black text-black font-bold transition-transform duration-300 transform hover:scale-105 rounded-3xl" 
-                id="submit-event" 
+                id="submit-event-mobile" 
                 disabled>
             AGENDAR
         </button>
@@ -686,24 +686,273 @@ $(document).ready(function() {
       // Add to your existing ready function
     $('#service, #professionalName, #start, #time').on('change', updateSummary);
 });
+$(document).ready(function() {
+    // Define a data mínima como hoje
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+    $('#start').attr('min', todayStr);
+    let previousServiceValue = '';
 
+    // When service changes
+    $('#service').on('change', function() {
+        const serviceValue = $(this).val();
+        
+        // Enable professional selection if not already selected
+        if (!$('#professionalName').val()) {
+            $('#professionalName').prop('disabled', !serviceValue);
+            $('#professionalName').toggleClass('bg-zinc-700/50 cursor-not-allowed', !serviceValue);
+        }
 
-</script>
-<script>
-// Add this JavaScript to ensure both buttons work the same way
-document.addEventListener('DOMContentLoaded', function() {
-    const submitButton = document.getElementById('submit-event');
-    const mobileSubmitButton = document.getElementById('submit-event-mobile');
+        if (serviceValue) {
+            if (previousServiceValue && previousServiceValue !== serviceValue) {
+                const professionalSelected = $('#professionalName').val();
+                const dateSelected = $('#start').val();
+                
+                if (professionalSelected && dateSelected) {
+                    checkAvailability();
+                }
+            }
+            
+            previousServiceValue = serviceValue;
+            
+            const professionalSelected = $('#professionalName').val();
+            const dateSelected = $('#start').val();
+            
+            if (professionalSelected && dateSelected) {
+                checkAvailability();
+            }
+        } else {
+            resetFields();
+        }
+    });
 
-    // Function to update button states
-    function updateButtonStates(isEnabled) {
-        submitButton.disabled = !isEnabled;
-        mobileSubmitButton.disabled = !isEnabled;
+    // When professional changes
+    $('#professionalName').on('change', function() {
+        const professionalSelected = $(this).val() !== '';
+        $('#start').prop('disabled', !professionalSelected);
+        $('#start').toggleClass('bg-zinc-700/50 cursor-not-allowed', !professionalSelected);
+
+        if (!professionalSelected) {
+            resetTimeAndButton();
+        } else {
+            const dateSelected = $('#start').val();
+            if (dateSelected) {
+                checkAvailability();
+            }
+        }
+    });
+
+    // When date changes
+    $('#start').on('change', function() {
+        const selectedDate = new Date($(this).val() + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        // Verifica se a data selecionada é anterior a hoje
+        if (selectedDate.getTime() < today.getTime()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Data Inválida',
+                text: 'Não é possível agendar para datas passadas.'
+            });
+            $(this).val('');
+            resetTimeAndButton();
+            return;
+        }
+
+        if ($(this).val() !== '') {
+            checkAvailability();
+        } else {
+            resetTimeAndButton();
+        }
+    });
+
+    function resetFields() {
+        $('#professionalName').val('').prop('disabled', true);
+        $('#start').val('').prop('disabled', true);
+        resetTimeAndButton();
     }
 
-    // Add your existing form validation logic here
-    // Make sure to call updateButtonStates() when form validity changes
+    function resetTimeAndButton() {
+        $('#time').empty().append('<option value="">Selecione um horário</option>').prop('disabled', true);
+        $('#submit-event-mobile').prop('disabled', true);
+    }
+
+    function checkAvailability() {
+        const date = $('#start').val();
+        const professional = $('#professionalName').val();
+        const currentService = $('#service').val();
+
+        if (date && professional) {
+            const selectedDate = new Date(date + 'T00:00:00');
+            const currentDate = new Date();
+            const dayOfWeek = selectedDate.getDay();
+            
+            // Obtém a hora e minutos atuais
+            const currentHour = currentDate.getHours();
+            const currentMinutes = currentDate.getMinutes();
+            let availableTimes = [];
+            
+            // Verifica se não é sábado (6) nem domingo (0)
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Segunda a Sexta
+                // Base array of available times
+                const baseTimesArray = [
+                    '08:00', '09:00', '10:00', '11:00',
+                    '12:00', '13:00', '14:00', '15:00',
+                    '16:00', '17:00', '18:00', '19:00',
+                    '20:00'
+                ];
+
+                // Verifica se é hoje
+                const isToday = selectedDate.toDateString() === currentDate.toDateString();
+
+                if (isToday) {
+                    // Para hoje, filtra apenas horários que estão pelo menos 30 minutos à frente
+                    availableTimes = baseTimesArray.filter(time => {
+                        const [hours, minutes] = time.split(':').map(Number);
+                        const timeInMinutes = hours * 60 + minutes;
+                        const currentTimeInMinutes = currentHour * 60 + currentMinutes + 30;
+                        return timeInMinutes > currentTimeInMinutes;
+                    });
+                } else {
+                    // Para dias futuros, mostra todos os horários disponíveis
+                    availableTimes = [...baseTimesArray];
+                }
+
+                // Ajax request to check occupied times
+                $.ajax({
+                    url: '/check-availability',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        date: date,
+                        professionalName: professional,
+                        service: currentService
+                    }),
+                    success: function(response) {
+                        const occupiedTimes = response
+                            .filter(event => event.professionalName === professional)
+                            .map(event => event.hora);
+
+                        const freeTimes = availableTimes.filter(time => !occupiedTimes.includes(time));
+
+                        const timeSelect = $('#time');
+                        timeSelect.empty().append('<option value="">Selecione um horário</option>');
+                        
+                        if (freeTimes.length > 0) {
+                            freeTimes.forEach(item => {
+                                timeSelect.append(`<option value="${item}">${item}</option>`);
+                            });
+                            timeSelect.prop('disabled', false);
+                            $('#submit-event-mobile').prop('disabled', false);
+                        } else {
+                            timeSelect.append('<option value="">Sem horários disponíveis</option>');
+                            timeSelect.prop('disabled', true);
+                            $('#submit-event-mobile').prop('disabled', true);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro na requisição:', error);
+                        alert('Erro ao buscar horários disponíveis. Tente novamente.');
+                        resetTimeAndButton();
+                    }
+                });
+            } else {
+                // Se for sábado ou domingo
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Dia Não Disponível',
+                    text: 'Não há atendimento aos sábados e domingos.'
+                });
+                $('#start').val('');
+                resetTimeAndButton();
+            }
+        } else {
+            resetTimeAndButton();
+        }
+    }
+
+    $('#submit-event-mobile').on('click', function() {
+        const service = $('#service').val();
+        const professionalName = $('#professionalName').val();
+        const start = $('#start').val();
+        const time = $('#time').val();
+
+        if (!time) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atenção',
+                text: 'Por favor, selecione um horário.',
+            });
+            return;
+        }
+
+        // Mostrar o loading spinner
+        $('#loading-spinner').removeClass('hidden');
+
+        $.ajax({
+            url: '/add-event',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                title: service,
+                start: `${start}T${time}`,
+                hora: time,
+                professionalName: professionalName
+            }),
+            success: function(response) {
+                // Esconder o loading spinner
+                $('#loading-spinner').addClass('hidden');
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso',
+                    text: 'Evento agendado com sucesso!',
+                }).then(() => {
+                    window.location.href = '/profile';
+                });
+            },
+            error: function(xhr, status, error) {
+                // Esconder o loading spinner
+                $('#loading-spinner').addClass('hidden');
+                
+                console.error('Erro ao criar evento:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: 'Erro ao criar evento. Tente novamente.',
+                });
+            }
+        });
+    });
 });
+
+function toggleButton() {
+    const service          = document.getElementById('service').value;
+    const professionalName = document.getElementById('professionalName').value;
+    const start            = document.getElementById('start').value;
+    const time             = document.getElementById('time').value;
+
+    const button = document.getElementById('submit-event-mobile');
+    
+    // Verifica se todos os campos estão preenchidos
+    if (service && professionalName && start && time) {
+        button.disabled = false;  // Habilita o botão
+    } else {
+        button.disabled = true;  // Desabilita o botão
+    }
+}
+
+// Adiciona eventos de input nos campos do formulário
+document.getElementById('service').addEventListener('change', toggleButton);
+document.getElementById('professionalName').addEventListener('change', toggleButton);
+document.getElementById('start').addEventListener('change', toggleButton);
+document.getElementById('time').addEventListener('change', toggleButton);
+
 </script>
 
 </body>
