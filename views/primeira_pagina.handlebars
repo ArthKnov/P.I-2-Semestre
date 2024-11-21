@@ -307,7 +307,7 @@
   <div class="flex flex-col items-center gap-4">
     <!-- Contêiner de imagens -->
     <div class="flex flex-wrap sm:flex-nowrap justify-center gap-4 w-full">
-      <!-- Imagem principal expandida -->
+      <!-- Apenas as três primeiras imagens visíveis em telas md ou maiores -->
       <figure id="first-image" class="relative transition-all duration-400 ease-in-out transform w-full sm:w-[300px] h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best1.jpg"
@@ -315,51 +315,49 @@
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      <!-- Imagens menores com hover para expandir -->
-      <figure class="relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg" onMouseEnter="shrinkFirstImage()" onMouseLeave="expandFirstImage()">
+      <figure class="hidden sm:block relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best2.jpg"
           alt="Skyline Oasis preview"
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      <figure class="relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg" onMouseEnter="shrinkFirstImage()" onMouseLeave="expandFirstImage()">
+      <figure class="hidden sm:block relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best9.jpg"
           alt="Skyline Oasis preview"
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      <!-- Outras imagens -->
-      <figure class="relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg" onMouseEnter="shrinkFirstImage()" onMouseLeave="expandFirstImage()">
+
+      <figure class="hidden md:block relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best4.jpg"
           alt="Vista Paradiso preview"
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      <figure class="relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg" onMouseEnter="shrinkFirstImage()" onMouseLeave="expandFirstImage()">
+      <figure class="hidden md:block relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best5.jpg"
           alt="Villa Verde preview"
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      <figure class="relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg" onMouseEnter="shrinkFirstImage()" onMouseLeave="expandFirstImage()">
+      <figure class="hidden md:block relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best6.jpg"
           alt="Villa Verde preview"
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      <figure class="relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg" onMouseEnter="shrinkFirstImage()" onMouseLeave="expandFirstImage()">
+      <figure class="hidden md:block relative transition-all duration-400 ease-in-out transform w-24 h-[300px] sm:h-[500px] hover:w-80 cursor-pointer flex-shrink-0 hover:shadow-lg rounded-lg">
         <img 
           src="./img/best7.jpg"
           alt="Villa Verde preview"
           class="object-cover rounded-lg shadow-md w-full h-full"
         >
       </figure>
-      
     </div>
     <!-- Título abaixo das imagens -->
     <h2 class="text-[20px] sm:text-[30px] font-semibold mt-4 tracking-widest text-gray-700">
@@ -367,7 +365,6 @@
     </h2>
   </div>
 </section>
-
 
 
 
