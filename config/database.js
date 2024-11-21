@@ -3,12 +3,12 @@ require("dotenv").config();
 
 // Configuração da conexão com fallback para localhost
 const sequelize = new Sequelize(
-  process.env.MYSQLDATABASE || "projeto_PI", // Nome do banco
-  process.env.MYSQLUSER || "root", // Usuário
-  process.env.MYSQLPASSWORD || "", // Senha
+  process.env.MYSQLDATABASE, // Nome do banco de dados
+  process.env.MYSQLUSER, // Usuário
+  process.env.MYSQLPASSWORD, // Senha
   {
-    host: process.env.MYSQLHOST || "localhost", // Host
-    port: process.env.MYSQLPORT || 3306, // Porta
+    host: process.env.MYSQLHOST, // Host (provavelmente o host privado fornecido pelo Railway)
+    port: process.env.MYSQLPORT, // Porta
     dialect: "mysql",
   }
 );
