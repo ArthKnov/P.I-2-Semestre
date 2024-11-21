@@ -681,7 +681,6 @@ app.post('/forgot-password', async (req, res) => {
             user: { nome: user.nome },
             resetLink: resetLink,
         });
-
         // Configurações do e-mail com a imagem embutida
         const mailOptions = {
             from: 'projetopi.agendamento@gmail.com',
