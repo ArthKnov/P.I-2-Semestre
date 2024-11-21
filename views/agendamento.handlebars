@@ -162,14 +162,14 @@ p {
   <div id="mobile-menu" style="position: absolute; top: 100%; left: 0; width: 100%; transform: translateY(-100%); transition: transform 0.8s ease-in-out; background-color: white; z-index: 9; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 16px;">
       <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 40px; padding-bottom: 16px; width: 100%;">
-        <button onclick="window.location.href='/login'" class="relative overflow-hidden text-sm px-6 py-2 border border-gray-400 text-pink-500 bg-white rounded-full transition duration-500 shadow-sm hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 group">
-          <span class="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-200 transform scale-0 group-hover:scale-150 transition-transform duration-500 rounded-full"></span>
-          <span class="relative">Agende Aqui</span>
-        </button>
-        <button onclick="window.location.href='/profile'" class="relative overflow-hidden text-sm px-6 py-2 border border-gray-400 text-pink-500 bg-white rounded-full transition duration-500 shadow-sm hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 group">
-          <span class="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-200 transform scale-0 group-hover:scale-150 transition-transform duration-500 rounded-full"></span>
-          <span class="relative">Meu Perfil</span>
-        </button>
+<button onclick="handleNavigation('/login')" class="relative overflow-hidden text-sm px-6 py-2 border border-gray-400 text-pink-500 bg-white rounded-full transition duration-500 shadow-sm hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 group">
+        <span class="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-200 transform scale-0 group-hover:scale-150 transition-transform duration-500 rounded-full"></span>
+        <span class="relative">Agende Aqui</span>
+      </button>
+      <button onclick="handleNavigation('/profile')" class="relative overflow-hidden text-sm px-6 py-2 border border-gray-400 text-pink-500 bg-white rounded-full transition duration-500 shadow-sm hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 group">
+        <span class="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-200 transform scale-0 group-hover:scale-150 transition-transform duration-500 rounded-full"></span>
+        <span class="relative">Meu Perfil</span>
+      </button>
       </div>
       <!-- Links -->
   <div class="text-black" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%;">
